@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/student")
 @RequiredArgsConstructor
+@Slf4j
 public class Student {
 
     private final StudentService studentService;
@@ -24,6 +25,7 @@ public class Student {
 
     @PostMapping("/")
     public ResponseEntity<ApiResponse<StudentResponseDTO>> createStudent(@RequestBody @Valid StudentRequestDTO student) {
+
         StudentResponseDTO responseDTO = studentService.createStudent(student);
         response = new ApiResponse<>(true, responseDTO,null, HttpStatus.CREATED, "student_created");
         return new ResponseEntity(response, HttpStatus.CREATED);
@@ -33,9 +35,9 @@ public class Student {
 
     @GetMapping("/")
     public ResponseEntity<ApiResponse<?>> getAllStudent() {
-
+        log.info("GET /api/v1/student called - fetching all students");
         List<StudentResponseDTO> responseDTOList = studentService.getAllStudent();
-
+        log.info("GET /api/v1/student called - fetching all students");
         if (responseDTOList.isEmpty()) {
             response = new ApiResponse<>(false, null,null, HttpStatus.NO_CONTENT, "no_students");
             return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
