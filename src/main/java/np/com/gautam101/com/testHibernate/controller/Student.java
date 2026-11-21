@@ -2,6 +2,7 @@ package np.com.gautam101.com.testHibernate.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import np.com.gautam101.com.testHibernate.advice.ApiResponse;
 import np.com.gautam101.com.testHibernate.dto.StudentRequestDTO;
 import np.com.gautam101.com.testHibernate.dto.StudentResponseDTO;
