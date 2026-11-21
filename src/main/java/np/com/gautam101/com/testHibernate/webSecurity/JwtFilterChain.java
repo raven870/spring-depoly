@@ -25,9 +25,10 @@ public class JwtFilterChain extends OncePerRequestFilter {
     private final HandlerExceptionResolver handlerExceptionResolver;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
 
-//        Header nikal
         final String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -35,42 +36,24 @@ public class JwtFilterChain extends OncePerRequestFilter {
             return;
         }
 
-//        Bearer se jwt token nikal
         try {
-        final String jwtToken = authHeader.substring(7);
-        final String email = jwtService.extractUsername(jwtToken);
+            final String jwtToken = authHeader.substring(7);
+            final String email = jwtService.extractUsername(jwtToken);
 
-
-//        agar email veht gelai aaro user avhi tak authenticate nai vehl xai tah authenticate karu
-
-        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails details = userDetailsService.loadUserByUsername(email);
-
-//            token mai valid email aaro token expiry tah nai vhagele check ke laagi
-
-
+            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails details = userDetailsService.loadUserByUsername(email);
 
                 if (jwtService.isTokenValid(jwtToken, details)) {
-                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(details.getUsername(), null, details.getAuthorities());
-//                Optional
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-//                main kaam yata xai set karu user ke SecurityContextHolder mai
-
                     SecurityContextHolder.getContext().setAuthentication(authToken);
-
                 }
-                filterChain.doFilter(request,response);
+            }
 
-
-
-        }
+            filterChain.doFilter(request, response);
         } catch (Exception e) {
-
-            handlerExceptionResolver.resolveException(request,response,null,e);
-            return;
+            handlerExceptionResolver.resolveException(request, response, null, e);
         }
-
-
     }
 }
