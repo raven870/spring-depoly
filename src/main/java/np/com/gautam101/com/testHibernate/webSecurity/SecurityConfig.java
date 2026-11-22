@@ -35,7 +35,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/student/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.POST,
                                 "/api/v1/student/")
-                        .hasRole("ADMIN")
+                        .hasAnyRole("ADMIN","USER")
 //                        Update by ADmin only
                                 .requestMatchers(HttpMethod.PUT,"/api/v1/student/**").hasRole("ADMIN")
 //                        Delete by Admin only
