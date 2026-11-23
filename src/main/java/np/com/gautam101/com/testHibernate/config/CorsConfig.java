@@ -16,11 +16,9 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of(
-                "https://your-production-frontend.com",
                 "http://localhost:*",
                 "http://127.0.0.1:*",
-                "https://*.gautam101.com.np",
-                "https://gautam101.com.np"
+                
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Content-Type", "Authorization"));
