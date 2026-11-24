@@ -1,7 +1,13 @@
 package np.com.gautam101.com.testHibernate.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -19,7 +25,7 @@ public class Role {
 
     @OneToMany(mappedBy = "role")
 
-    private User user;
+    private List<User> users = new ArrayList<>();
 
 
 }
