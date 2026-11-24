@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString // dev only
+// @ToString // dev only
 public class Role {
 
     @Id
@@ -17,7 +17,7 @@ public class Role {
 
     private String name;
 
-    @OneToOne(mappedBy = "role")
+    @OneToMany(mappedBy = "role")
 
     private User user;
 
